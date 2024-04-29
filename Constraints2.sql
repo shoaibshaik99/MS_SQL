@@ -17,6 +17,7 @@ CREATE TABLE Department (
     DepartmentName NVARCHAR(50)   -- Department name
 );
 
+--The foreign key (not necessarily primary key) column can have the values in present in primary key of pareant table or null.
 -- Add a FOREIGN KEY constraint linking Employee to Department
 ALTER TABLE Employee
 ADD DepartmentID INT,
@@ -190,4 +191,3 @@ VALUES
     (2, 'Max');
 
 --***********************************************************************************************************************************************************
-

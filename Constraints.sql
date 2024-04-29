@@ -85,4 +85,4 @@ ADD id INT IDENTITY(1,1) PRIMARY KEY;
 Insert into Employees Values ('Alice', 25000, '2024-02-24')
 
 --Display the table
-SELECT * FROM employees
+SELECT * FROM Employees
