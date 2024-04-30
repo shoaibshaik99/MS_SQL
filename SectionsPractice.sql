@@ -362,7 +362,28 @@ select city, avg(RewardPoints) as 'Moderately active consumers' from consumers g
 
 --Grouping sets
 
+--SUB QUERY
+SELECT employee_id, first_name, last_name, salary FROM employees WHERE salary > (SELECT AVG(salary) FROM employees);
 
+SELECT product_name, list_price, category_id FROM production.products p1 WHERE list_price IN
+(SELECT MAX(p2.list_price) FROM production.products p2 WHERE p2.category_id = p1.category_id GROUP BY p2.category_id)
+ORDER BY category_id, product_name;
+
+--in select statement
+SELECT
+    employee_id, first_name, last_name, department_name, salary,
+    (SELECT ROUND(AVG(salary), 0)
+     FROM employees e2
+     WHERE e2.department_id = e1.department_id) AS avg_salary_in_department
+FROM employees e1;
+
+
+SELECT
+    employee_id, first_name, last_name, department_name, salary,
+    (SELECT ROUND(AVG(salary), 0)
+     FROM employees e2
+     WHERE e2.department_id = e1.department_id) AS avg_salary_in_department
+FROM employees e1;
 
 
 

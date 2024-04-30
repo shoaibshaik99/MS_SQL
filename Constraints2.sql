@@ -23,6 +23,20 @@ ALTER TABLE Employee
 ADD DepartmentID INT,
     FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID);  -- Prevents destroying links
 
+DROP Table Employee, Department;
+
+select * from employee
+select * from Department
+
+Insert into Department values(1,'HR')
+Insert into Department values(2,'SAP')
+Insert into Employee values(1,'Karen',50000,1)
+-- will fail as the child table's row value in foreign key column is not among the primary key of parent's table
+Insert into Employee values(2,'zenit',50000,3)
+
+
+
+
 -- Add a CHECK constraint on Gender (only 'Male' or 'Female' allowed)
 ALTER TABLE Employee
 ADD Gender NVARCHAR(10) CHECK (Gender IN ('Male', 'Female'));
