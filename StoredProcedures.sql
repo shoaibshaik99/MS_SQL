@@ -82,7 +82,7 @@ Exec usp_GetPremiumConsumers 400, 'Chicago'
 --Do not forget to use @ when using parameters
 Exec usp_GetPremiumConsumers @MinRP = 500, @City = 'New York';
 
---Alterign to include LastName as a parameter
+--Altering to include LastName as a parameter
 Alter Proc usp_GetPremiumConsumers(@MinRP as int, @City as varchar(max),@LastName as varchar(max))
 As
 Begin
@@ -105,6 +105,8 @@ Exec usp_GetPremiumConsumers 'New York', 500, 'Smith';
  --sometimes there might be an error but the output isn't a desired one
 Exec usp_GetPremiumConsumers 500, 'Smith', 'New York';
 
+
+--The brackets for parameters are optional
 --Optional Parameters (By assigning default values to them) (Default values are set while assigining parameters)
 Alter Proc usp_GetPremiumConsumers(@MinRP as int  = 250, @City as varchar(max) = 'New York', @LastName as varchar(max))
 As
@@ -173,7 +175,7 @@ Print 'A sample of standalone print statement'
 Print 'The Max RP among the consumers is ' + Cast(@MAxRP as Varchar(max));
 
 --Hide the number of rows affected messages using the following
-SET NOCOUNT ON;
+SET NOCOUNT ON; -- to be included within the proc
 
 --Selecting a Record into variable
 Declare @MaxRPConsumer as varchar(max), @MaxRP as int
@@ -233,3 +235,24 @@ End;
 	Declare @CountOfCities as int;
 	Exec usp_CountOfDistinctCities @CountOfCities Output;
 	Select @CountOfCities as 'Count of Distinct Cities'
+
+
+
+--****************************************************************************************
+--Stored Procedures security with encryption
+sp_helptext usp_CountOfDistinctCities --displays the text written the stored procedure
+sp_helptext usp_GetMaxRPConsumers
+sp_helptext sp_rename --inbuilt stored procedure
+sp_helptext sp_helptext --Interesting!
+
+--To not to display the text of a stored procedure it can be encrypted as follows
+Alter Proc usp_CountOfDistinctCities(@CountOfCities int Output) -- Input parameters can also be given here
+With Encryption
+As
+Begin
+	Select Distinct City From Consumers;
+	Select @CountOfCities = @@ROWCOUNT;
+End;
+
+--trying sp_helptext after encrypting
+sp_helptext usp_CountOfDistinctCities -- Text in the stored procedure will not be displayed as it is encrypted.
