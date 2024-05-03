@@ -51,7 +51,7 @@ Begin
 	Print 'Creating, Altering and Deleting Table is prohibited in this Server'
 	Rollback Transaction
 End
---Creating fee databases
+--Creating few databases
 Create Database db1
 Create Database db2
 Create Database db3
