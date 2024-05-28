@@ -62,7 +62,7 @@ Drop Function dbo.TotalRPDisbursed;
 Drop Function TotalRPDisbursed(); --incorrect syntax
 Drop Function dbo.TotalRPDisbursed(); -- incorrect syntax
 
--- Giving appropriate name to thwe function to fetch total RP disbursed
+-- Giving appropriate name to the function to fetch total RP disbursed
 Create Function GetTotalRP()
 Returns int
 As

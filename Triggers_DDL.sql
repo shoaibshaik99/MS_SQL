@@ -67,7 +67,7 @@ Use db3
 Create Table Table1(ID int)
 --Resetting things !
 Drop Database db1, db2, db3
---Droppingthe trigger in the database
+--Dropping the trigger in the database
 Drop Trigger trgServerRestrictions On All Server
 
 --**********************************

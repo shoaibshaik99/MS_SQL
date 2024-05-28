@@ -43,7 +43,8 @@ Drop Proc usp_GetEmail, usp_GetFullName;
 
 --Stored Procedures with parameters
 --Consumers who have Reward Points(RP) more than a MinRP are considered PremiumConsumers
-Create Proc usp_GetPremiumConsumers(@MinRP as int)
+--Create Proc usp_GetPremiumConsumers @MinRP as int -- brackets are optional
+Create Proc usp_GetPremiumConsumers (@MinRP as int)
 As
 Begin
 Select FirstName + ' ' +  LastName As 'Full Name', RewardPoints From Consumers Where RewardPoints>@MinRP;
@@ -56,7 +57,7 @@ Begin
 Select FirstName + ' ' +  LastName As 'Full Name', RewardPoints From Consumers Where RewardPoints>@MinRP Order By RewardPoints Desc;
 End;
 
---Fetching Prmium Consumers details as per threshold set by the respective company
+--Fetching Premium Consumers details as per threshold set by the respective company
 --The input can be asltered
 Exec usp_GetPremiumConsumers 100;
 Exec usp_GetPremiumConsumers 300;
@@ -102,11 +103,12 @@ Exec usp_GetPremiumConsumers @City = 'Houston', @LastName = 'Lee', @MinRP = 200;
 Exec usp_GetPremiumConsumers 500, 'New York', 'Smith';
 --Throws error becasue of data type mismatch
 Exec usp_GetPremiumConsumers 'New York', 500, 'Smith';
- --sometimes there might be an error but the output isn't a desired one
+ --sometimes there might not be an error but the output isn't a desired one
 Exec usp_GetPremiumConsumers 500, 'Smith', 'New York';
 
 
 --The brackets for parameters are optional
+
 --Optional Parameters (By assigning default values to them) (Default values are set while assigining parameters)
 Alter Proc usp_GetPremiumConsumers(@MinRP as int  = 250, @City as varchar(max) = 'New York', @LastName as varchar(max))
 As
@@ -139,7 +141,7 @@ Exec usp_GetPremiumConsumers @City = 'Houston', @LastName = 'Lee', @MinRP = 200;
 --****************************************************************************************
 
 --Variables
--- Note: VARCHAR meand varying character string!
+-- Note: VARCHAR means varying character string!
 
 --Typical use cases of Variables:
 --As a loop counter to count the number of times a loop is performed.
@@ -155,7 +157,7 @@ Declare @Variable1 as int, @Variable2 as date
 
 --Assigning Value to Variables
 Declare @ThresholdRP int;
-Set @ThresholdRP = 500; -- This line alone gives error. Variables are session variables(?)
+Set @ThresholdRP = 500; -- This line executed alone gives error. Variables are session variables(?)
 
 --Using Varibles in a query
 Declare @ThresholdRP int;
@@ -164,12 +166,12 @@ Select FirstName + ' ' +  LastName As 'Full Name', RewardPoints, City From Consu
 
 --Storing query Result in a variable
 Declare @MaxRP as int
-Set @MaxRP = (Select Max(RewardPoints) From Consumers) -- Do not forget to enclose select statemtn in brackets
+Set @MaxRP = (Select Max(RewardPoints) From Consumers) -- Do not forget to enclose select statement in brackets
 Select @MaxRP
 Select @MaxRP As MaxRP
 --Print can be used to just prinr the value
 Declare @MaxRP as int
-Set @MaxRP = (Select Max(RewardPoints) From Consumers) -- Do not forget to enclose select statemtn in brackets
+Set @MaxRP = (Select Max(RewardPoints) From Consumers) -- Do not forget to enclose select statement in brackets
 Print @MaxRP
 Print 'A sample of standalone print statement'
 Print 'The Max RP among the consumers is ' + Cast(@MAxRP as Varchar(max));
@@ -190,6 +192,7 @@ Select Top 1 @MaxRPConsumer = FirstName + ' ' + LastName , @MaxRP = RewardPoints
 Select @MaxRPConsumer As MaxRPConsumer, @MaxRP As MaxRP
 
 --Accumulating values into a variable
+--Does this gets executed row by row?
 Create Proc usp_GetMaxRPConsumers(@MaxRP int)
 As
 Begin
@@ -202,6 +205,8 @@ Begin
 
 	Print @MaxRPConsumers
 End;
+--Drop Proc usp_GetMaxRPConsumers
+
 --Altering
 Alter Proc usp_GetMaxRPConsumers(@MaxRP int)
 As
@@ -256,3 +261,13 @@ End;
 
 --trying sp_helptext after encrypting
 sp_helptext usp_CountOfDistinctCities -- Text in the stored procedure will not be displayed as it is encrypted.
+
+
+--****************************************************************************************
+--Template
+CREATE PROCEDURE [dbo].InsertIntoEmployeeTable
+	@param1 int = 0,
+	@param2 int
+AS
+	SELECT @param1, @param2
+RETURN 0

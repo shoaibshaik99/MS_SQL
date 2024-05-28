@@ -104,7 +104,7 @@ From inserted as i
 
 End
 
---The order in Union all determines how you order of insertion into sudit table, critical when updating the main table.
+--The order in Union all determines how you order of insertion into audit table, critical when updating the main table.
 Update Consumers
 Set Phone = 1234567890 
 Where Phone = 1526843790 and Email = 'bob.nguyen@email.com'

@@ -64,3 +64,40 @@ VALUES
 ('Zack', 'Brown', 'm', 9876543210, 'zack.brown@email.com', 'New York', 950, '2023-07-18'),
 ('Alice', 'Garcia', 'f', 5551234567, 'alice.garcia@email.com', 'San Francisco', 550, '2023-09-21'),
 ('Bob', 'Nguyen', 'm', 1234567890, 'bob.nguyen@email.com', 'Chicago', 750, '2022-11-14');
+
+--************************************************************************************************************************
+CREATE TABLE ConsumersOrders
+(
+    OrderID int IDENTITY(1,1) PRIMARY KEY NOT NULL,
+    CustomerID int NOT NULL,
+    OrderDate date NOT NULL,
+    OrderTotal decimal(10, 2) NOT NULL,
+    ShippingAddress varchar(255),
+    CONSTRAINT fk_Customer FOREIGN KEY (CustomerID)
+        REFERENCES Consumers(CustomerID)
+);
+
+INSERT INTO ConsumersOrders (CustomerID, OrderDate, OrderTotal, ShippingAddress) VALUES
+(1, '2023-01-20', 150.00, '123 Main St, New York, NY'),
+(2, '2023-07-25', 200.00, '456 Elm St, Los Angeles, CA'),
+(3, '2023-12-05', 250.00, '789 Maple Ave, Chicago, IL'),
+(4, '2022-05-15', 300.00, '321 Oak St, Houston, TX'),
+(5, '2023-08-10', 350.00, '654 Pine St, Miami, FL'),
+(6, '2023-01-22', 175.00, '234 Main St, New York, NY'),
+(7, '2023-07-27', 225.00, '567 Elm St, Los Angeles, CA'),
+(8, '2023-12-07', 275.00, '890 Maple Ave, Chicago, IL'),
+(9, '2022-05-17', 325.00, '432 Oak St, Houston, TX'),
+(10, '2023-08-12', 375.00, '765 Pine St, Miami, FL'),
+(11, '2023-01-24', 160.00, '345 Main St, New York, NY'),
+(12, '2023-07-29', 210.00, '678 Elm St, Los Angeles, CA'),
+(13, '2023-12-09', 260.00, '101 Maple Ave, Chicago, IL'),
+(14, '2022-05-19', 310.00, '543 Oak St, Houston, TX'),
+(15, '2023-08-14', 360.00, '876 Pine St, Miami, FL'),
+(16, '2023-01-26', 165.00, '456 Main St, New York, NY'),
+(17, '2023-07-31', 215.00, '789 Elm St, Los Angeles, CA'),
+(18, '2023-12-11', 265.00, '202 Maple Ave, Chicago, IL'),
+(19, '2022-05-21', 315.00, '654 Oak St, Houston, TX'),
+(20, '2023-08-16', 365.00, '987 Pine St, Miami, FL');
+
+
+Select * From ConsumersOrders
